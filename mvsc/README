@@ -1,0 +1,39 @@
+     0.14:这个版本与0.13版的区别是增加了N区文件的读入，还有一些原本在头文件中定义的static全局变量，现在定义在main.cpp中，然后extern to cgvsimulation.h中..
+	 0.15:在0.14版本中，small deletion和large deletion有可能相邻，异致要修改deletion的信息，在这个版本中，加入了一个flank == 10,，也就是说产生的small deletion 和large deletion的距离至少为10.
+	 0.16:在0.15之前的版本中，在记录由large insertion导致的cnv时，错误地将拷贝的位置记录为插入的位置，导致call出的cnv不准确。还有一个原因就是之前只考虑large insertion,large deletion、inversion的独占，而cnv的拷贝序列则不考虑独占问题，这样的话，有一些large deletion发生在拷贝区域，而且两个拷贝区域也有可能有overlap，这将使结果很难比较..在0.15之前的版本中，因为一个小错误，没能 模拟纯合的small insertion，在这个版本修正了这个bug..
+	 0.17:fix a bug which reading human reference file.Before fixed, the  program will exit if simulate the variation of chrY.
+
+0.18 & revision 1:
+	snp like A->CG is very little, so I change the mutation rate of this kind of snp
+
+0.19 & revision 2:
+	change the methods to output variation info
+	修改当small insertion的个数为0时，程序无法结束的问题.
+	从模拟单条染色体的变异改变成模拟整个基因组的变异.
+	病毒整合的病毒序列可以从一条变为多条，一个基因组里可以整合进多种病毒。 
+
+0.2.0 & revision 4:
+	fix a bug:修改了拷贝序列中不包含snp和small indel信息 的bug 
+
+0.2.1 & revision 5:
+	改边读取参考序列，边模拟变异为先将参考序列全部读到内存中，然后再模拟变异。这样才可以模拟染色体间的结构变异。
+	fix a bug:原方法中，在模拟插入位置时，就把插入序列记录到被插入位置对应的信息中，这会导致在模拟para时期和cancer时期变异时，新增的snp和indel未包含在插入序列中，造成变异不准确。现在改成记录位置的方式，只有在组装变异参考基因组时，才把插入序列生成.
+	改变数据结构: deletion、copy、inversion和insertion分开在不同的类中记录, 
+	改成：
+	    sv_var_info
+	        变异类型
+	        纯杂合
+	        长度
+	        产生时期
+
+		insertion_var_info
+		    插入序列所在染色体
+		    插入序列位置信息迭代器
+
+		
+1.0 & revision 6:
+	Change description of mvsc	
+	change verion to 1.0
+
+1.0 & revision 7:
+	Change description of mvsc	
